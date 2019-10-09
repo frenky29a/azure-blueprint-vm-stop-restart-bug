@@ -1,0 +1,52 @@
+{
+    "kind": "template",
+    "properties": {
+        "resourceGroup": "ResourceGroup",
+        "parameters": {
+            "virtualNetwork_name": {
+                "value": "[parameters('virtualNetwork_name')]"
+            }
+        },
+        "displayName": "vnet",
+        "description": "",
+        "dependsOn": [],
+        "template": {
+            "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+            "contentVersion": "1.0.0.0",
+            "parameters": {
+                "virtualNetwork_name": {
+                    "type": "string"
+                }
+            },
+            "variables": {},
+            "resources": [
+                {
+                    "type": "Microsoft.Network/virtualNetworks",
+                    "apiVersion": "2018-12-01",
+                    "name": "[parameters('virtualNetwork_name')]",
+                    "location": "westeurope",
+                    "properties": {
+                        "addressSpace": {
+                            "addressPrefixes": [
+                                "10.0.0.0/24"
+                            ]
+                        },
+                        "subnets": [
+                            {
+                                "name": "subnet1",
+                                "properties": {
+                                    "addressPrefix": "10.0.0.0/25",
+                                    "serviceEndpoints": [],
+                                    "delegations": []
+                                }
+                            }
+                        ],
+                        "virtualNetworkPeerings": [],
+                        "enableDdosProtection": false,
+                        "enableVmProtection": false
+                    }
+                }
+            ]
+        }
+    }
+}

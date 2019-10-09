@@ -1,0 +1,80 @@
+{
+    "kind": "template",
+    "properties": {
+        "resourceGroup": "ResourceGroup",
+        "parameters": {
+            "networkInterface_name": {
+                "value": "[parameters('networkInterface_name')]"
+            },
+            "subnet_id_to_join": {
+                "value": "[parameters('subnet_id_to_join')]"
+            },
+            "vm_ip": {
+                "value": "[parameters('vm_ip')]"
+            },
+            "publicIpAddressName": {
+                "value": "[parameters('publicIpAddressName')]"
+            }
+        },
+        "displayName": "vm-win0-nic",
+        "description": "",
+        "dependsOn": [
+            "vnet",
+            "vm-win0-public-ip"
+        ],
+        "template": {
+            "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+            "contentVersion": "1.0.0.0",
+            "parameters": {
+                "networkInterface_name": {
+                    "type": "string"
+                },
+                "subnet_id_to_join": {
+                    "type": "string"
+                },
+                "vm_ip": {
+                    "type": "string"
+                },
+                "publicIpAddressName": {
+                    "type": "string"
+                }
+            },
+            "variables": {},
+            "resources": [
+                {
+                    "type": "Microsoft.Network/networkInterfaces",
+                    "apiVersion": "2018-11-01",
+                    "name": "[parameters('networkInterface_name')]",
+                    "location": "westeurope",
+                    "properties": {
+                        "ipConfigurations": [
+                            {
+                                "name": "ipconfig1",
+                                "properties": {
+                                    "privateIPAddress": "[parameters('vm_ip')]",
+                                    "privateIPAllocationMethod": "Static",
+                                    "subnet": {
+                                        "id": "[parameters('subnet_id_to_join')]"
+                                    },
+                                    "primary": true,
+                                    "privateIPAddressVersion": "IPv4",
+                                    "publicIpAddress": {
+                                        "id": "[resourceId('Microsoft.Network/publicIpAddresses', parameters('publicIpAddressName'))]"
+                                    }
+                                }
+                            }
+                        ],
+                        "dnsSettings": {
+                            "dnsServers": [],
+                            "appliedDnsServers": []
+                        },
+                        "enableAcceleratedNetworking": true,
+                        "enableIPForwarding": false,
+                        "primary": true,
+                        "tapConfigurations": []
+                    }
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "identity": {
+        "type": "SystemAssigned"
+    },
+    "location": "WestEurope",
+    "properties": {
+        "blueprintId": "/subscriptions/AAAABBBB-CCCC-DDDD-EEEE-FFFFGGGGHHHH/providers/Microsoft.Blueprint/blueprints/Blueprint-RG-WestEu-vm-win0",
+        "resourceGroups": {
+            "ResourceGroup": {
+                "name": "RG-WestEu-vm-win0",
+                "location": "WestEurope"
+            }
+        },
+        "locks": {
+            "mode": "AllResourcesReadOnly"
+        },
+        "parameters": {
+            "networkInterface_name": {
+                "value": "vm-win0-nic"
+            },
+            "virtualNetwork_name": {
+                "value": "vnet1"
+            },
+            "subnet_id_to_join": {
+                "value": "/subscriptions/AAAABBBB-CCCC-DDDD-EEEE-FFFFGGGGHHHH/resourceGroups/RG-WestEu-vm-win0/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"
+            },
+            "vm_ip": {
+                "value": "10.0.0.10"
+            },
+            "publicIpAddressName": {
+                "value": "vm-win0-public-ip"
+            },
+            "virtualMachine_name": {
+                "value": "vm-win0"
+            },
+            "disk_name_os": {
+                "value": "vm-win0-disk-os"
+            },
+            "vm_admin_name": {
+                "value": "someuser"
+            },
+            "vm_admin_password": {
+                "value": "some-p@$4W)rD!@#-:-)"
+            }
+        }
+    }
+}

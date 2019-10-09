@@ -1,0 +1,107 @@
+{
+    "kind": "template",
+    "properties": {
+        "resourceGroup": "ResourceGroup",
+        "parameters": {
+            "virtualMachine_name": {
+                "value": "[parameters('virtualMachine_name')]"
+            },
+            "vm_admin_name": {
+                "value": "[parameters('vm_admin_name')]"
+            },
+            "vm_admin_password": {
+                "value": "[parameters('vm_admin_password')]"
+            },
+            "networkInterface_name": {
+                "value": "[parameters('networkInterface_name')]"
+            },
+            "disk_name_os": {
+                "value": "[parameters('disk_name_os')]"
+            }
+        },
+        "displayName": "vm-win0",
+        "description": "",
+        "dependsOn": [
+            "vm-win0-nic"
+        ],
+        "template": {
+            "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+            "contentVersion": "1.0.0.0",
+            "parameters": {
+                "vm_admin_name": {
+                    "type": "string"
+                },
+                "vm_admin_password": {
+                    "type": "string"
+                },
+                "virtualMachine_name": {
+                    "type": "string"
+                },
+                "networkInterface_name": {
+                    "type": "string"
+                },
+                "disk_name_os": {
+                    "type": "string"
+                }
+            },
+            "variables": {},
+            "resources": [
+                {
+                    "type": "Microsoft.Compute/virtualMachines",
+                    "apiVersion": "2019-03-01",
+                    "name": "[parameters('virtualMachine_name')]",
+                    "location": "westeurope",
+                    "properties": {
+                        "hardwareProfile": {
+                            "vmSize": "Standard_F4s_v2"
+                        },
+                        "storageProfile": {
+                            "imageReference": {
+                                "publisher": "MicrosoftWindowsServer",
+                                "offer": "WindowsServer",
+                                "sku": "2019-Datacenter",
+                                "version": "latest"
+                            },
+                            "osDisk": {
+                                "name": "[parameters('disk_name_os')]",
+                                "createOption": "FromImage",
+                                "caching": "ReadWrite",
+                                "managedDisk": {
+                                    "storageAccountType": "Premium_LRS"
+                                },
+                                "diskSizeGB": 128
+                            },
+                            "dataDisks": []
+                        },
+                        "osProfile": {
+                            "computerName": "[parameters('virtualMachine_name')]",
+                            "adminUsername": "[parameters('vm_admin_name')]",
+                            "adminPassword": "[parameters('vm_admin_password')]",
+                            "windowsConfiguration": {
+                                "enableAutomaticUpdates": true,
+                                "provisionVmAgent": true
+                            },
+                            "secrets": [],
+                            "allowExtensionOperations": true
+                        },
+                        "networkProfile": {
+                            "networkInterfaces": [
+                                {
+                                    "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterface_name'))]",
+                                    "properties": {
+                                        "primary": true
+                                    }
+                                }
+                            ]
+                        },
+                        "diagnosticsProfile": {
+                            "bootDiagnostics": {
+                                "enabled": false
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

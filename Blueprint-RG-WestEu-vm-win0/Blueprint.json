@@ -1,0 +1,42 @@
+{
+    "properties": {
+        "targetScope": "subscription",
+        "parameters": {
+            "networkInterface_name": {
+                "type": "string"
+            },
+            "virtualNetwork_name": {
+                "type": "string"
+            },
+            "subnet_id_to_join": {
+                "type": "string"
+            },
+            "vm_ip": {
+                "type": "string"
+            },
+            "publicIpAddressName": {
+                "type": "string"
+            },
+            "virtualMachine_name": {
+                "type": "string"
+            },
+            "disk_name_os": {
+                "type": "string"
+            },
+            "vm_admin_name": {
+                "type": "string"
+            },
+            "vm_admin_password": {
+                "type": "string"
+            }
+        },
+        "resourceGroups": {
+            "ResourceGroup": {
+                "metadata": {
+                    "displayName": "RG_see_blueprint_name"
+                },
+                "dependsOn": []
+            }
+        }
+    }
+}

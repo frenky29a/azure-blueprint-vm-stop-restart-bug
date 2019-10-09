@@ -1,0 +1,38 @@
+{
+    "kind": "template",
+    "properties": {
+        "resourceGroup": "ResourceGroup",
+        "parameters": {
+            "publicIpAddressName": {
+                "value": "[parameters('publicIpAddressName')]"
+            }
+        },
+        "displayName": "vm-win0-public-ip",
+        "description": "",
+        "dependsOn": [],
+        "template": {
+            "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+            "contentVersion": "1.0.0.0",
+            "parameters": {
+                "publicIpAddressName": {
+                    "type": "string"
+                }
+            },
+            "variables": {},
+            "resources": [
+                {
+                    "type": "Microsoft.Network/publicIpAddresses",
+                    "apiVersion": "2019-02-01",
+                    "name": "[parameters('publicIpAddressName')]",
+                    "location": "westeurope",
+                    "sku": {
+                        "name": "Basic"
+                    },
+                    "properties": {
+                        "publicIpAllocationMethod": "Dynamic"
+                    }
+                }
+            ]
+        }
+    }
+}
